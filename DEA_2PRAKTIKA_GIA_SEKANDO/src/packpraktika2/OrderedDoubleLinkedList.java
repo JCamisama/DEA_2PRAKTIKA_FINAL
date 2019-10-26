@@ -63,10 +63,10 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 			if( kontatutakoPosizio == 0 ){ //Zerrendaren lehenengoa baino txikiagoa izatekotan
 				
 				super.first = berria;
-			}
-			
-			super.count++;
+			}	
 		}
+		
+		super.count++;
 	}
 
 	public void merge(DoubleLinkedList<T> pZerrenda){

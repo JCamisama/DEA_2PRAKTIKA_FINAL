@@ -113,12 +113,34 @@ public class UnorderedDoubleLinkedListTest {
 
 	@Test
 	public void testIsEmpty() {
-		fail("Not yet implemented");
+		
+		UnorderedDoubleLinkedList zerreHutsa = new UnorderedDoubleLinkedList();
+		
+		//Zerrenda hutsa denean
+		assertTrue(zerreHutsa.isEmpty());
+		
+		//Zerrenda ez-hutsa denean (peli1 bere baitan dago)
+		assertFalse(zerre1.isEmpty());
+		
 	}
 
 	@Test
 	public void testSize() {
-		fail("Not yet implemented");
+		
+		UnorderedDoubleLinkedList<Pelikula>	zerreHutsa	= new UnorderedDoubleLinkedList();
+		UnorderedDoubleLinkedList<Pelikula>	zerre2		= new UnorderedDoubleLinkedList();
+		Pelikula							peli2		= new Pelikula("Zombie Party 2");
+		
+		//Zerrenda hutsa denean
+		assertEquals(zerreHutsa.size(), 0);
+		
+		//Zerrenda elementu bakarra daukanean (peli1 bere barnean)
+		assertEquals(zerre1.size(), 1);
+		
+		//Zerrenda elementu bat baino gehiago dituenean (peli1 eta peli2 bere barnean)
+		zerre2.addToRear(peli1);
+		zerre2.addToRear(peli2);
+		assertEquals(zerre2.size(), 2);
 	}
 
 	@Test

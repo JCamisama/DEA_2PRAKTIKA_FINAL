@@ -42,7 +42,7 @@ public class UnorderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLi
 				
 			}
 			
-			this.count++;
+			super.count++;
 
 		}
 	

@@ -272,7 +272,7 @@ public abstract class DoubleLinkedList<T extends Comparable<T>> implements ListA
 
 	
 	public void adabegiakInprimatu() {
-		System.out.println(this.toString());
+		System.out.println(this.count);
 	}
 
 	
