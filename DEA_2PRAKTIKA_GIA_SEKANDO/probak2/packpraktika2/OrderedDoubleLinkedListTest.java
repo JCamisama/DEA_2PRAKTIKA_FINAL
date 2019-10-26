@@ -24,6 +24,9 @@ public class OrderedDoubleLinkedListTest {
 
 	@After
 	public void tearDown() throws Exception {
+		
+		zerre1.zerrendaHustu();
+		peli1 = null;
 	}
 
 	@Test
@@ -170,7 +173,49 @@ public class OrderedDoubleLinkedListTest {
 
 	@Test
 	public void testMerge() {
-		fail("Not yet implemented");
+		
+		/*
+		 	1. Zerrenda biak hutsak izatea {} ()
+			2. Zerrendaren bat hutsa izatea {a,b} ( )
+			3. Beste zerrenda hutsa izatea {} (a,b )
+			4. Bi zerrenda eukita,euren arteko beste zerrenda ordenatu bat egitea {3,2} (1,4,5)
+			5. Bi zerrenda eukita,euren arteko beste zerrenda ordenatu bat egitea, baina elementu bat erripikatzea {1,3,2} (3,4,5)
+			
+		 */
+		
+		// 1. Zerrenda biak hutsak izatea		
+		OrderedDoubleLinkedList<Pelikula> zerreHutsa1 = new OrderedDoubleLinkedList<Pelikula>();
+		OrderedDoubleLinkedList<Pelikula> zerreHutsa2 = new OrderedDoubleLinkedList<Pelikula>();
+			//Zerrenda hutsa izaten jarraitzen duenez, bere luzeera 0 izango da
+		zerreHutsa1.merge(zerreHutsa2);
+		assertEquals(0, zerreHutsa1.size());
+		
+		// 2. Zerrendaren bat hutsa izatea
+		OrderedDoubleLinkedList<Pelikula> zerre2 = new OrderedDoubleLinkedList<Pelikula>();		
+		Pelikula	peli2	= new Pelikula("Zombie Party 2");
+		zerre2.add(peli1);
+		zerre2.add(peli2);
+			//Zerre hutsa bat gehitzen denez, 2 elemntu bakarrik eukingo ditu
+		zerre2.merge(zerreHutsa1);
+		assertEquals(2, zerre2.size());
+		
+		// 3. Beste zerrenda hutsa izatea
+		OrderedDoubleLinkedList<Pelikula> zerre3 = new OrderedDoubleLinkedList<Pelikula>();				
+		zerre3.add(peli1);
+		zerre3.add(peli2);
+			//Zerre hutsa bat gehitzen denez, 2 elemntu bakarrik eukingo ditu
+		zerreHutsa2.merge(zerre3);
+		assertEquals(2, zerre3.size());
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	
