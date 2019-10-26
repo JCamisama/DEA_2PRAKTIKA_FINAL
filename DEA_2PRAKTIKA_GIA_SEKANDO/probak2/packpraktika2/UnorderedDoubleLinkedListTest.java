@@ -47,7 +47,7 @@ public class UnorderedDoubleLinkedListTest {
 	@Test
 	public void testAddToFront() { //DONE
 		
-		//Zerrenda hutsa danean
+		//Zerrenda hutsa denean
 		UnorderedDoubleLinkedList<Pelikula> zerreHutsa = new UnorderedDoubleLinkedList<Pelikula>();
 		zerreHutsa.addToFront(peli1);
 		assertEquals(zerre1.size(), 1);	
@@ -71,7 +71,7 @@ public class UnorderedDoubleLinkedListTest {
 	@Test
 	public void testAddToRear() { //DONE
 		
-		//Zerrenda hutsa danean
+		//Zerrenda hutsa denean
 		UnorderedDoubleLinkedList<Pelikula> zerreHutsa = new UnorderedDoubleLinkedList<Pelikula>();
 		zerreHutsa.addToRear(peli1);
 		assertEquals(zerre1.size(), 1);	

@@ -293,4 +293,30 @@ public abstract class DoubleLinkedList<T extends Comparable<T>> implements ListA
 		
 		this.first = null;
 	}
+
+	public int posizioaZerrendan(T pElem){ //FROGAK EGITEKO ERABILIKO DA BAKARRIK
+		
+		int			pos		= -1;
+		Iterator<T> itr 	= this.iterator();
+		T elementua			= null;
+		int			konta	= 0;
+		
+		while(itr.hasNext() && pos < 0 ){
+			
+			elementua	= itr.next();
+			
+			if(elementua.equals(pElem)){
+				
+				pos = konta;
+			}
+			
+			else{
+				
+				konta++;
+			}
+		}
+		
+		return pos;
+	
+	}
 }

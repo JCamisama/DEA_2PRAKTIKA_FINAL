@@ -37,28 +37,48 @@ public class OrderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testAdd() {
+	public void testAdd() { //DONE
 		
-		//Zerrenda hutsa danean
+		/* Proba kasuak:
+		  
+	 	- 5. Elementu berria zerrendan daudenak baino handiagoa izatea (azkenengo posizioan gehitzea).
+	 */
+		
+		//1. Zerrenda hutsa denean
 		OrderedDoubleLinkedList<Pelikula> zerreHutsa = new OrderedDoubleLinkedList<Pelikula>();
 		zerreHutsa.add(peli1);
 		assertEquals(zerre1.size(), 1);	
 		
 		
-		//Elementu bakarrerko zerrenda denean	
+		//2. Elementu bakarrerko zerrenda denean	
 		Pelikula	peli2	= new Pelikula("Zombie Party 2");
 		zerre1.add(peli2);
 		assertEquals(zerre1.size(), 2);		
-				
-		//Elementu bat edo gehiako zerrenda denean
-		OrderedDoubleLinkedList<Pelikula> zerre2 = new OrderedDoubleLinkedList<Pelikula>();
-		Pelikula	peli3	= new Pelikula("Zombie Party 2");
-		zerre2.add(peli1);
-		zerre2.add(peli2);
-		zerre2.add(peli3);		
-		assertEquals(zerre2.size(), 3);		
+		
+		//3. Elementu berria zerrendan daudenak baino txikiagoa izatea (lehenengo posizioan gehitzea).
+		OrderedDoubleLinkedList<Pelikula> zerreBerri = new OrderedDoubleLinkedList<Pelikula>();
+		Pelikula	peliLehena	= new Pelikula("Agora");
+		Pelikula	peli3	= new Pelikula("Blindsided");
+		Pelikula	peli4	= new Pelikula("Cannibal");
+		
+		zerreBerri.add(peli3);
+		zerreBerri.add(peli4);
+		
+			//peliLehena gehitzerakoan, lehenengo posizioan txertatuko da, A<B eta A<C
+		zerreBerri.add(peliLehena);
+		assertEquals(peliLehena, zerreBerri.first());
 		
 		
+		//4. Elementu berria zerrendako erdialdeko posizio batean joatea.
+			/*zerreBerri Agora(0), Blindsided(1) eta Cannibal(2) pelikulak bere barnean dituela,
+				Blindsided-ren posizioa (1) konparatuko da.*/
+		assertEquals(1, zerreBerri.posizioaZerrendan(peli3));
+		
+		//5. Elementu berria zerrendan daudenak baino handiagoa izatea (azkenengo posizioan gehitzea)
+			//zerreBerri-n peli2 (Zombie Party 2) gehitzean, azkenengo posizioan egongo da.
+		zerreBerri.add(peli2);
+		assertEquals(peli2, zerreBerri.last());
+
 	}
 
 	@Test
