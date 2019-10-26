@@ -2,18 +2,31 @@ package packpraktika2;
 
 public class UnorderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLinkedList<T> implements UnorderedListADT<T> {
 	
-	public void addToFront(T elem) {
+	public void addToFront(T pElem) {
 		
 		// Aurrebaldintza: ----
 		// Postbaldintza: elem zerrendaren hasieran gehitu da.
 		// hasieran gehitu
-
-				Node datua = new Node(elem);
-				datua.next = this.first;
-				datua.prev = this.first.prev;
-				this.first = datua;
-
 		
+		Node<T> datua = new Node(pElem);
+		Node<T> unekoa = this.first;
+		
+		if (this.isEmpty()) {
+			
+			first = datua;
+			datua.prev  = datua;
+			datua.next	 = datua;
+				
+		}
+		
+		else {
+			
+			datua.next = this.first;
+			datua.prev = this.first.prev;
+			this.first = datua;
+		}
+		
+		this.count++;
 	}
 
 	public void addToRear(T pElem) {

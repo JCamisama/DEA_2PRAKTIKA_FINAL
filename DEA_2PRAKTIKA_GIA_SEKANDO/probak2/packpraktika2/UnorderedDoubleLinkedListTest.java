@@ -33,9 +33,7 @@ public class UnorderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testRemove() {
-		
-		
+	public void testRemove() {		
 		
 	}
 
@@ -47,13 +45,52 @@ public class UnorderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testAddToFront() {
-		fail("Not yet implemented");
+	public void testAddToFront() { //DONE
+		
+		//Zerrenda hutsa danean
+		UnorderedDoubleLinkedList<Pelikula> zerreHutsa = new UnorderedDoubleLinkedList<Pelikula>();
+		zerreHutsa.addToFront(peli1);
+		assertEquals(zerre1.size(), 1);	
+		
+		
+		//Elementu bakarrerko zerrenda denean	
+		Pelikula	peli2	= new Pelikula("Zombie Party 2");
+		zerre1.addToFront(peli2);
+		assertEquals(zerre1.size(), 2);		
+				
+		//Elementu bat edo gehiako zerrenda denean
+		UnorderedDoubleLinkedList<Pelikula> zerre2 = new UnorderedDoubleLinkedList<Pelikula>();
+		Pelikula	peli3	= new Pelikula("Zombie Party 2");
+		zerre2.addToFront(peli1);
+		zerre2.addToFront(peli2);
+		zerre2.addToFront(peli3);		
+		assertEquals(zerre2.size(), 3);
+		
 	}
 
 	@Test
-	public void testAddToRear() {
-		fail("Not yet implemented");
+	public void testAddToRear() { //DONE
+		
+		//Zerrenda hutsa danean
+		UnorderedDoubleLinkedList<Pelikula> zerreHutsa = new UnorderedDoubleLinkedList<Pelikula>();
+		zerreHutsa.addToRear(peli1);
+		assertEquals(zerre1.size(), 1);	
+		
+		
+		//Elementu bakarrerko zerrenda denean	
+		Pelikula	peli2	= new Pelikula("Zombie Party 2");
+		zerre1.addToRear(peli2);
+		assertEquals(zerre1.size(), 2);		
+				
+		//Elementu bat edo gehiako zerrenda denean
+		UnorderedDoubleLinkedList<Pelikula> zerre2 = new UnorderedDoubleLinkedList<Pelikula>();
+		Pelikula	peli3	= new Pelikula("Zombie Party 2");
+		zerre2.addToRear(peli1);
+		zerre2.addToRear(peli2);
+		zerre2.addToRear(peli3);		
+		assertEquals(zerre2.size(), 3);
+		
+		
 	}
 
 	@Test
@@ -61,11 +98,7 @@ public class UnorderedDoubleLinkedListTest {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	public void testDoubleLinkedList() {
-		fail("Not yet implemented");
-	}
-
+	
 	@Test
 	public void testSetDeskr() { //DONE
 		//Zerrendaren deskribapena egiten...
@@ -87,13 +120,35 @@ public class UnorderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testRemoveFirst() {
-		fail("Not yet implemented");
+	public void testRemoveFirst() { //DONE
+		
+		//Elementu bakarrerko zerrenda denean		
+		zerre1.removeFirst();
+		assertEquals(zerre1.size(), 0);		
+		
+		//Elementu bat edo gehiako zerrenda denean
+		Pelikula	peli2	= new Pelikula("Zombie Party 2");
+		zerre1.addToFront(peli1);
+		zerre1.addToFront(peli2);
+		zerre1.removeFirst();
+		assertEquals(zerre1.size(), 1);
+		
 	}
 
 	@Test
-	public void testRemoveLast() {
-		fail("Not yet implemented");
+	public void testRemoveLast() { //DONE
+		
+		//Elementu bakarrerko zerrenda denean		
+		zerre1.removeLast();
+		assertEquals(zerre1.size(), 0);
+		
+		//Elementu bat edo gehiako zerrenda denean
+		Pelikula	peli2	= new Pelikula("Zombie Party 2");
+		zerre1.addToFront(peli1);
+		zerre1.addToFront(peli2);
+		zerre1.removeLast();
+		assertEquals(zerre1.size(), 1);
+		
 	}
 
 	

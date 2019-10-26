@@ -39,15 +39,24 @@ public class OrderedDoubleLinkedListTest {
 	@Test
 	public void testAdd() {
 		
-		OrderedDoubleLinkedList<Pelikula>	zerre2		= null;
-				zerre2 = new OrderedDoubleLinkedList();
-		Pelikula							peli2		= null;
-				peli2 = new Pelikula("Zombie Party 2");
+		//Zerrenda hutsa danean
+		OrderedDoubleLinkedList<Pelikula> zerreHutsa = new OrderedDoubleLinkedList<Pelikula>();
+		zerreHutsa.add(peli1);
+		assertEquals(zerre1.size(), 1);	
 		
+		
+		//Elementu bakarrerko zerrenda denean	
+		Pelikula	peli2	= new Pelikula("Zombie Party 2");
+		zerre1.add(peli2);
+		assertEquals(zerre1.size(), 2);		
+				
+		//Elementu bat edo gehiako zerrenda denean
+		OrderedDoubleLinkedList<Pelikula> zerre2 = new OrderedDoubleLinkedList<Pelikula>();
+		Pelikula	peli3	= new Pelikula("Zombie Party 2");
+		zerre2.add(peli1);
 		zerre2.add(peli2);
-		assertEquals(zerre2.size(), 1);
-		
-		
+		zerre2.add(peli3);		
+		assertEquals(zerre2.size(), 3);		
 		
 		
 	}
@@ -57,11 +66,7 @@ public class OrderedDoubleLinkedListTest {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	public void testDoubleLinkedList() {
-		fail("Not yet implemented");
-	}
-
+	
 	@Test
 	public void testSetDeskr() { //DONE
 		//Zerrendaren deskribapena egiten...
@@ -83,16 +88,36 @@ public class OrderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testRemoveFirst() {
-		fail("Not yet implemented");
+	public void testRemoveFirst() { //DONE
+		
+		//Elementu bakarrerko zerrenda denean		
+		zerre1.removeFirst();
+		assertEquals(zerre1.size(), 0);		
+		
+		//Elementu bat edo gehiako zerrenda denean
+		Pelikula	peli2	= new Pelikula("Zombie Party 2");
+		zerre1.add(peli1);
+		zerre1.add(peli2);
+		zerre1.removeFirst();
+		assertEquals(zerre1.size(), 1);
+		
 	}
 
 	@Test
-	public void testRemoveLast() {
-		fail("Not yet implemented");
-	}
-
-	
+	public void testRemoveLast() { //DONE
+		
+		//Elementu bakarrerko zerrenda denean		
+		zerre1.removeLast();
+		assertEquals(zerre1.size(), 0);
+		
+		//Elementu bat edo gehiako zerrenda denean
+		Pelikula	peli2	= new Pelikula("Zombie Party 2");
+		zerre1.add(peli1);
+		zerre1.add(peli2);
+		zerre1.removeLast();
+		assertEquals(zerre1.size(), 1);
+		
+	}	
 	
 	
 	@Test
