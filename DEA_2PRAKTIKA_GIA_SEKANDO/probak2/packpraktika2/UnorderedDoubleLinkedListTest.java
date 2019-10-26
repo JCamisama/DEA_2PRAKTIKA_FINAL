@@ -17,7 +17,7 @@ public class UnorderedDoubleLinkedListTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		zerre1	=	new UnorderedDoubleLinkedList();
+		zerre1	=	new UnorderedDoubleLinkedList<Pelikula>();
 		peli1	=	new Pelikula("Joker");
 		
 		zerre1.addToRear(peli1);
@@ -67,7 +67,7 @@ public class UnorderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testSetDeskr() { 
+	public void testSetDeskr() { //DONE
 		//Zerrendaren deskribapena egiten...
 		
 		String deskribapen = "deskribapen hau ez da zuk ulertzeko";
@@ -77,7 +77,7 @@ public class UnorderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testGetDeskr() {
+	public void testGetDeskr() {//DONE
 		//Zerrendaren deskribapena egiten...
 		
 		String deskribapen = "deskribapen hau ez da zuk ulertzeko";
@@ -96,14 +96,41 @@ public class UnorderedDoubleLinkedListTest {
 		fail("Not yet implemented");
 	}
 
+	
+	
 	@Test
-	public void testFirst() {
-		fail("Not yet implemented");
+	public void testFirst() { //DONE
+
+		//Zerrenda hutsa denean.
+		UnorderedDoubleLinkedList<Pelikula> zerreHutsa = new UnorderedDoubleLinkedList<Pelikula>();
+		assertNull(zerreHutsa.first());
+		
+		//Zerrenda elementu bakarra (zerre1 peli1 bere baitan daukala jakinda).
+		assertEquals(peli1, zerre1.first());
+		
+		//Zerrenda elementu bat baino gehiago dituenean(zerre1 peli2 gehitzen).
+		Pelikula	peli2	= new Pelikula("Zombie Party 2");
+		zerre1.addToFront(peli2);
+		assertEquals(peli2, zerre1.first());
+		
 	}
 
+	
+	
 	@Test
-	public void testLast() {
-		fail("Not yet implemented");
+	public void testLast() { //DONE
+		
+		//Zerrenda hutsa denean.
+		UnorderedDoubleLinkedList<Pelikula> zerreHutsa = new UnorderedDoubleLinkedList<Pelikula>();
+		assertNull(zerreHutsa.last());
+		
+		//Zerrenda elementu bakarra (zerre1 peli1 bere baitan daukala jakinda).
+		assertEquals(peli1, zerre1.last());
+		
+		//Zerrenda elementu bat baino gehiago dituenean(zerre1 peli2 gehitzen).
+		Pelikula	peli2	= new Pelikula("Zombie Party 2");
+		zerre1.addToFront(peli2);
+		assertEquals(peli1, zerre1.last());
 	}
 
 	@Test
@@ -112,9 +139,9 @@ public class UnorderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testIsEmpty() {
+	public void testIsEmpty() { //DONE
 		
-		UnorderedDoubleLinkedList zerreHutsa = new UnorderedDoubleLinkedList();
+		UnorderedDoubleLinkedList<Pelikula> zerreHutsa = new UnorderedDoubleLinkedList<Pelikula>();
 		
 		//Zerrenda hutsa denean
 		assertTrue(zerreHutsa.isEmpty());
@@ -125,10 +152,10 @@ public class UnorderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testSize() {
+	public void testSize() { //DONE
 		
-		UnorderedDoubleLinkedList<Pelikula>	zerreHutsa	= new UnorderedDoubleLinkedList();
-		UnorderedDoubleLinkedList<Pelikula>	zerre2		= new UnorderedDoubleLinkedList();
+		UnorderedDoubleLinkedList<Pelikula>	zerreHutsa	= new UnorderedDoubleLinkedList<Pelikula>();
+		UnorderedDoubleLinkedList<Pelikula>	zerre2		= new UnorderedDoubleLinkedList<Pelikula>();
 		Pelikula							peli2		= new Pelikula("Zombie Party 2");
 		
 		//Zerrenda hutsa denean
