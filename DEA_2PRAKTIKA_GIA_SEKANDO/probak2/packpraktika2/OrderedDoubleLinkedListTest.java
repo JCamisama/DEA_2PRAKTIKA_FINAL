@@ -27,13 +27,100 @@ public class OrderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testRemove() {
-		fail("Not yet implemented");
+	public void testRemove() { //DONE
+		
+		/* Proba kasuak:
+		  
+	
+	 	- 7. Elementua zerrendan ez dagoenean eta elementu anitzeko zerrenda denean: Lehenengoa baino txikiagoa denean.
+	 	- 8. Elementua zerrendan ez dagoenean eta elementu anitzeko zerrenda denean: Erdialdeko bat baino txikiagoa denean.
+	 	- 9. Elementua zerrendan ez dagoenean eta elementu anitzeko zerrenda denean: Guztiak baino handiagoa denean.
+	 */
+		
+		//1. Zerrenda hutsa denean
+		OrderedDoubleLinkedList<Pelikula> zerreHutsa = new OrderedDoubleLinkedList<Pelikula>();
+		assertNull(zerreHutsa.remove(peli1));
+		
+		//2. Elementua zerrendan dago eta elementu bakarreko zerrenda denean.
+			//zerre1 peli1 bere baitan daukala jakinda
+		assertEquals(peli1, zerre1.remove(peli1));
+		
+		
+		//3. Elementu bakarreko zerrenda, ezabatu nahi dena ez egotea
+		OrderedDoubleLinkedList<Pelikula> zerre2 = new OrderedDoubleLinkedList<Pelikula>();
+		Pelikula	peli2	= new Pelikula("Zombie Party 2");
+		zerre2.add(peli1);
+		assertNull(zerreHutsa.remove(peli2));
+		
+		//4. Elementu anitzeko zerrenda, bilatutakoa hasieran egotea
+			//zerre3 peli3 bere lehenengo posizioan daukala jakinda
+		OrderedDoubleLinkedList<Pelikula> zerre3 = new OrderedDoubleLinkedList<Pelikula>();
+		Pelikula	peli3	= new Pelikula("Zombie Party 2");
+		Pelikula	peli4	= new Pelikula("Unlasting");
+		zerre3.add(peli1);
+		zerre3.add(peli2);
+		zerre3.add(peli3);
+		assertEquals(peli3, zerre3.remove(peli3));
+		
+		//5. Elementu anitzeko zerrenda, bilatutakoa erdian egotea
+			//zerre3 peli2 bere erdialdeko posizioan (1) daukala jakinda (posizioak 0, 1 eta 2 direla)
+		zerre3.add(peli3);
+		assertEquals(peli2, zerre3.find(peli2));
+		
+		//6. Elementu anitzeko zerrenda, bilatutakoa amaieran egotea
+			//zerre3 peli1 bere azkenengo posizioan daukala jakinda
+		zerre3.add(peli1);
+		assertEquals(peli1, zerre3.remove(peli1));
+	
+		//7. Elementu anitzeko zerrenda, bilatutakoa ez egotea
+				assertNull(zerre3.remove(peli4));
+				/*Kasu honetan ez du zerrenda osoa zeharkatuko ezabatu nahi den elementua aztertutakoa baino txikiagoa
+				  bada.
+				 */
+		
+		
 	}
 
 	@Test
-	public void testFind() {
-		fail("Not yet implemented");
+	public void testFind() { //DONE
+		
+		//1. Zerrenda hutsa denean
+		OrderedDoubleLinkedList<Pelikula> zerreHutsa = new OrderedDoubleLinkedList<Pelikula>();
+		assertNull(zerreHutsa.find(peli1));
+		
+		//2. Elementu bakarreko zerrenda, bilatutakoa ez egotea
+		OrderedDoubleLinkedList<Pelikula> zerre2 = new OrderedDoubleLinkedList<Pelikula>();
+		Pelikula	peli2	= new Pelikula("K-POP: GRANDES EXITOS");
+		zerre2.add(peli1);
+		assertNull(zerreHutsa.find(peli2));
+	
+		//3. Elementu bakarreko zerrenda, bilatutakoa zerrendakoa izatea
+			//zerre1 peli1 bere baitan daukala jakinda
+		assertEquals(peli1, zerre1.find(peli1));
+		
+		//4. Elementu anitzeko zerrenda, bilatutakoa ez egotea
+		OrderedDoubleLinkedList<Pelikula> zerre3 = new OrderedDoubleLinkedList<Pelikula>();
+		Pelikula	peli3	= new Pelikula("Lollipop");
+		Pelikula	peli4	= new Pelikula("Unlasting");
+		zerre3.add(peli1);
+		zerre3.add(peli2);
+		zerre3.add(peli3);
+		assertNull(zerre3.find(peli4));
+		
+		//5. Elementu anitzeko zerrenda, bilatutakoa hasieran egotea
+			//zerre3 peli1 bere lehenengo posizioan daukala jakinda
+		assertEquals(peli1, zerre3.find(peli1));
+		assertEquals(peli1, zerre3.first());
+		
+		//6. Elementu anitzeko zerrenda, bilatutakoa amaieran egotea
+			//zerre3 peli3 bere azkenengo posizioan daukala jakinda
+		assertEquals(peli3, zerre3.find(peli3));
+		assertEquals(peli3, zerre3.last());
+	
+		//7. Elementu anitzeko zerrenda, bilatutakoa erdian egotea
+			//zerre3 peli2 bere erdialdeko posizioan (1) daukala jakinda (posizioak 0, 1 eta 2 direla)
+		assertEquals(peli2, zerre3.find(peli2));
+		assertEquals(1, zerre3.posizioaZerrendan(peli2));
 	}
 
 	@Test
@@ -163,7 +250,7 @@ public class OrderedDoubleLinkedListTest {
 	public void testLast() { //DONE
 		
 		//Zerrenda hutsa denean.
-		UnorderedDoubleLinkedList<Pelikula> zerreHutsa = new UnorderedDoubleLinkedList<Pelikula>();
+		OrderedDoubleLinkedList<Pelikula> zerreHutsa = new OrderedDoubleLinkedList<Pelikula>();
 		assertNull(zerreHutsa.last());
 		
 		//Zerrenda elementu bakarra (zerre1 peli1 bere baitan daukala jakinda).
@@ -176,8 +263,23 @@ public class OrderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testContains() {
-		fail("Not yet implemented");
+	public void testContains() { //DONE
+		
+	
+	//1. Zerrenda hutsa izatea.
+	OrderedDoubleLinkedList<Pelikula> zerreHutsa = new OrderedDoubleLinkedList<Pelikula>();
+	assertFalse(zerreHutsa.contains(peli1));
+	
+	//2. Zerrenda ez hutsa izatea eta elementua zerrendan egotea.
+	assertTrue(zerre1.contains(peli1));
+	
+	//3. Zerrenda ez hutsa izatea eta elementua zerrendan ez egotea. 	
+	Pelikula	peli2	= new Pelikula("Zombie Party 2");
+	assertFalse(zerre1.contains(peli2));
+	
+	/*Elementuaren posizioaren arabera erantzutea find() metodoaren menpe egongo da,
+	  beraz, bere proba kasuak testfind()-en aurki daitezke */
+	
 	}
 
 	@Test
@@ -220,14 +322,6 @@ public class OrderedDoubleLinkedListTest {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	public void testAdabegiakInprimatu() {
-		fail("Not yet implemented");
-	}
 
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
 
 }

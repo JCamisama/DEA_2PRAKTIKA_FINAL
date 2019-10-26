@@ -141,7 +141,7 @@ public abstract class DoubleLinkedList<T extends Comparable<T>> implements ListA
 		 	- 2. Zerrenda ez hutsa izatea eta elementua zerrendan egotea.
 		 	- 3. Zerrenda ez hutsa izatea eta elementua zerrendan ez egotea.
 		 */
-		if (isEmpty()){
+		if (this.isEmpty()){
 			
 			return false;
 		}

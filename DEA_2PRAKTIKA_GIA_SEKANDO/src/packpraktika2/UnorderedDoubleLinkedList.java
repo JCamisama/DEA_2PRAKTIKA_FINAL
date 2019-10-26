@@ -175,6 +175,7 @@ public class UnorderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLi
 						aurrekoa	= aurrekoa.next;
 						unekoa		= unekoa.next;
 						hurrengoa	= hurrengoa.next;
+						kontatutakoPosizio++;
 					}
 				}
 			}

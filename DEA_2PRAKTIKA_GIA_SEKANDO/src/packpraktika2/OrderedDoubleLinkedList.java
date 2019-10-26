@@ -127,48 +127,48 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 	}
 
 	public T find(T pElem) {
-
-		
-		 
+ 
 		// Aurre Baldintza : ------
 		// Post Baldintza : Elementua bueltatuko du aurkituz gero, eta null bestela
 		// Kostua: O(n)
 			
-			Node<T> lag;
-			lag=first;		
-			boolean topatua = false;	
-			int kont = 0;
 			
-			if (this.isEmpty()){return null;}		
+			Node<T>    lag  = this.first;		
+			boolean topatua = false;
+			boolean txikia	= false; //Zerrendan bilatzerakoan pElem lag.data baino txikiagoa bada,
+										//hurrengo elementuak ez dira aztertuko.
+			int		kont	= 0;
+			T 		emaitza = null;
 			
-			else {
+			if (!this.isEmpty()){		
 			
-				while(kont != this.count && !topatua) {
+				while(kont != this.count && !topatua && !txikia) {
 
 
-	                      		if (lag.data.toString().compareToIgnoreCase(pElem.toString()) <= 0 ){
-	  
-	                            		return null;
+                    if (pElem.compareTo(lag.data) < 0 ){
+  
+                    	txikia=true;
 
-	                      		}
+                    }
 				
 					else if (lag.data.equals(pElem)) {
 						
-						topatua=true;
-						return lag.data;
+						topatua = true;
+						emaitza = lag.data;
+						
 						
 					}
 					
-					lag=lag.next;	
-					kont++;
-				
+					else{
+						
+						lag=lag.next;	
+						kont++;
+					}
 				}
-				
 			}
-							
-			return null;	
 			
-		}
+			return emaitza;		
+	}
 
 	@Override
 	public T remove(T pElem) {
@@ -235,6 +235,7 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 						aurrekoa	= aurrekoa.next;
 						unekoa		= unekoa.next;
 						hurrengoa	= hurrengoa.next;
+						kontatutakoPosizio++;
 					}
 				}
 			}
