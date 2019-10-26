@@ -58,7 +58,8 @@ public abstract class DoubleLinkedList<T extends Comparable<T>> implements ListA
 		
 		else{
 			
-			this.first	= null;				   //Zerrenda hutsik geratuko da.			
+			this.first	= null;				   //Zerrenda hutsik geratuko da.
+			this.count		= this.count - 1;
 		}
 		
 		
@@ -92,7 +93,8 @@ public abstract class DoubleLinkedList<T extends Comparable<T>> implements ListA
 		
 		else{
 			
-			this.first	= null;				   //Zerrenda hutsik geratuko da.			
+			this.first	= null;				   //Zerrenda hutsik geratuko da.
+			this.count		= this.count - 1;
 		}
 		
 		
