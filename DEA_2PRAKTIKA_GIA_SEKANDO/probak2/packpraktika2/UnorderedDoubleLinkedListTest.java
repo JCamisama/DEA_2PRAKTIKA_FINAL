@@ -34,7 +34,9 @@ public class UnorderedDoubleLinkedListTest {
 
 	@Test
 	public void testRemove() {
-		fail("Not yet implemented");
+		
+		
+		
 	}
 
 	@Test
@@ -65,13 +67,23 @@ public class UnorderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testSetDeskr() {
-		fail("Not yet implemented");
+	public void testSetDeskr() { 
+		//Zerrendaren deskribapena egiten...
+		
+		String deskribapen = "deskribapen hau ez da zuk ulertzeko";
+		zerre1.setDeskr(deskribapen);
+		assertEquals("deskribapen hau ez da zuk ulertzeko", zerre1.getDeskr());			
+
 	}
 
 	@Test
 	public void testGetDeskr() {
-		fail("Not yet implemented");
+		//Zerrendaren deskribapena egiten...
+		
+		String deskribapen = "deskribapen hau ez da zuk ulertzeko";
+		zerre1.setDeskr(deskribapen);
+		assertEquals("deskribapen hau ez da zuk ulertzeko", zerre1.getDeskr());			
+		
 	}
 
 	@Test
