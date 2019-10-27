@@ -3,6 +3,9 @@ import packpraktika1.*;
 
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -131,57 +134,81 @@ public class OrderedDoubleLinkedListTest {
 		
 		/* Proba kasuak:
 		  
-	 	- 5. Elementu berria zerrendan daudenak baino handiagoa izatea (azkenengo posizioan gehitzea).
+	 	
 	 */
 		
 		//1. Zerrenda hutsa denean
 		OrderedDoubleLinkedList<Pelikula> zerreHutsa = new OrderedDoubleLinkedList<Pelikula>();
 		zerreHutsa.add(peli1);
 		assertEquals(zerre1.size(), 1);	
+		assertEquals(zerre1.find(peli1), peli1);	//pelikula barnean dagoela konprobatzen
 		
 		
 		//2. Elementu bakarrerko zerrenda denean	
 		Pelikula	peli2	= new Pelikula("Zombie Party 2");
 		zerre1.add(peli2);
-		assertEquals(zerre1.size(), 2);		
+		
+		assertEquals(zerre1.size(), 2);
+		assertEquals(zerre1.find(peli1), peli1);	//pelikula barnean dagoela konprobatzen
+		assertEquals(zerre1.find(peli2), peli2);	//pelikula barnean dagoela konprobatzen
+		
 		
 		//3. Elementu berria zerrendan daudenak baino txikiagoa izatea (lehenengo posizioan gehitzea).
 		OrderedDoubleLinkedList<Pelikula> zerreBerri = new OrderedDoubleLinkedList<Pelikula>();
 		Pelikula	peliLehena	= new Pelikula("Agora");
-		Pelikula	peli3	= new Pelikula("Blindsided");
-		Pelikula	peli4	= new Pelikula("Cannibal");
+		Pelikula	peli3		= new Pelikula("Blindsided");
+		Pelikula	peli4		= new Pelikula("Cannibal");
+		Pelikula 	peli5		= new Pelikula("Fast and Furious 18");
+		Pelikula 	peli6		= new Pelikula("Mad Max");
 		
 		zerreBerri.add(peli3);
 		zerreBerri.add(peli4);
+		zerreBerri.add(peli5);
+		zerreBerri.add(peli6);
 		
 			//peliLehena gehitzerakoan, lehenengo posizioan txertatuko da, A<B eta A<C
 		zerreBerri.add(peliLehena);
 		assertEquals(peliLehena, zerreBerri.first());
 		
+			//Beste pelikulak zerrendan daudela konrpobatzen (eta posizio egokian)
+		assertEquals(zerreBerri.find(peli3), peli3);
+		assertEquals(1, zerreBerri.posizioaZerrendan(peli3));
+		
+		assertEquals(zerreBerri.find(peli4), peli4);
+		assertEquals(2, zerreBerri.posizioaZerrendan(peli4));
+		
+		assertEquals(zerreBerri.find(peli5), peli5);
+		assertEquals(3, zerreBerri.posizioaZerrendan(peli5));
+		
+		assertEquals(zerreBerri.find(peli6), peli6);
+		assertEquals(4, zerreBerri.posizioaZerrendan(peli6));
+		
 		
 		//4. Elementu berria zerrendako erdialdeko posizio batean joatea.
-			/*zerreBerri Agora(0), Blindsided(1) eta Cannibal(2) pelikulak bere barnean dituela,
-				Blindsided-ren posizioa (1) konparatuko da.*/
-		assertEquals(1, zerreBerri.posizioaZerrendan(peli3));
+			/*zerreBerri Agora(0), Blindsided(1), Cannibal(2), Fast and Furious 18(3) eta Mad Max(4) pelikulak bere barnean dituela,
+			  Cannibal-ren posizioa (2) konparatuko da.*/
+		
+		Pelikula	peliErdialdekoa	= new Pelikula("Caballeros del Zodiaco");
+		zerreBerri.add(peliErdialdekoa);
+		assertEquals(2, zerreBerri.posizioaZerrendan(peliErdialdekoa));
+		
 		
 		//5. Elementu berria zerrendan daudenak baino handiagoa izatea (azkenengo posizioan gehitzea)
 			//zerreBerri-n peli2 (Zombie Party 2) gehitzean, azkenengo posizioan egongo da.
 		zerreBerri.add(peli2);
 		assertEquals(peli2, zerreBerri.last());
+		
+		Iterator<Pelikula> itr = zerreBerri.iterator();
+		
+		while (itr.hasNext()) {
+			Pelikula peliHau = itr.next();
+			peliHau.inprimatuIzena();
+		}	
 
 	}
 
 	@Test
 	public void testMerge() {
-		
-		/*
-		 	1. Zerrenda biak hutsak izatea {} ()
-			2. Zerrendaren bat hutsa izatea {a,b} ( )
-			3. Beste zerrenda hutsa izatea {} (a,b )
-			4. Bi zerrenda eukita,euren arteko beste zerrenda ordenatu bat egitea {3,2} (1,4,5)
-			5. Bi zerrenda eukita,euren arteko beste zerrenda ordenatu bat egitea, baina elementu bat erripikatzea {1,3,2} (3,4,5)
-			
-		 */
 		
 		// 1. Zerrenda biak hutsak izatea		
 		OrderedDoubleLinkedList<Pelikula> zerreHutsa1 = new OrderedDoubleLinkedList<Pelikula>();
@@ -190,7 +217,7 @@ public class OrderedDoubleLinkedListTest {
 		zerreHutsa1.merge(zerreHutsa2);
 		assertEquals(0, zerreHutsa1.size());
 		
-		// 2. Zerrendaren bat hutsa izatea
+		// 2. Lehenengo zerrenda ez-hutsa eta bigarrena hutsa
 		OrderedDoubleLinkedList<Pelikula> zerre2 = new OrderedDoubleLinkedList<Pelikula>();		
 		Pelikula	peli2	= new Pelikula("Zombie Party 2");
 		zerre2.add(peli1);
@@ -199,22 +226,237 @@ public class OrderedDoubleLinkedListTest {
 		zerre2.merge(zerreHutsa1);
 		assertEquals(2, zerre2.size());
 		
-		// 3. Beste zerrenda hutsa izatea
+		// 3. Lehenengo zerrenda hutsa eta bigarrena ez-hutsa
 		OrderedDoubleLinkedList<Pelikula> zerre3 = new OrderedDoubleLinkedList<Pelikula>();				
 		zerre3.add(peli1);
 		zerre3.add(peli2);
 			//Zerre hutsa bat gehitzen denez, 2 elemntu bakarrik eukingo ditu
 		zerreHutsa2.merge(zerre3);
-		assertEquals(2, zerre3.size());
+		assertEquals(2, zerreHutsa2.size());
+		
+		// 4. Bi zerrenda izanda, haien artean beste zerrenda ordenatu bat egitea 
+		
+			//Zerrenda bat
+		OrderedDoubleLinkedList<Pelikula> zerreBat = new OrderedDoubleLinkedList<Pelikula>();
+		Pelikula	peliBat	 = new Pelikula("Acha");
+		Pelikula	peliBi	 = new Pelikula("Bazuka");
+		Pelikula	peliHiru = new Pelikula("Casiopea");
+		zerreBat.add(peliBat);
+		zerreBat.add(peliBi);
+		zerreBat.add(peliHiru);
+		
+			//Zerrenda bi
+		OrderedDoubleLinkedList<Pelikula> zerreBi = new OrderedDoubleLinkedList<Pelikula>();
+		Pelikula	peliBat2	 = new Pelikula("Asakura");
+		Pelikula	peliBi2	 = new Pelikula("Bisuper");
+		Pelikula	peliHiru2 = new Pelikula("Cerbero");
+		zerreBi.add(peliBat2);
+		zerreBi.add(peliBi2);
+		zerreBi.add(peliHiru2);
+		
+			//Biak elkartzen
+		zerreBat.merge(zerreBi);
+		
+			//Luzeraren eta inprimatutakoaren arabera gauzak ondo atera direla frogatuko da
+		assertEquals(6, zerreBat.size());
 		
 		
+		Iterator<Pelikula> it4 = zerreBat.iterator();
+		
+		while (it4.hasNext()) {
+			Pelikula peliHau = it4.next();
+			peliHau.inprimatuIzena();
+		}
+		System.out.println("\n\n\n");
+		
+		// 5. Bi zerrenda izanda, haien artean beste zerrenda ordenatu bat egitea, elementu berdin bat dutela
+		zerreBat.zerrendaHustu();
+		zerreBi.zerrendaHustu();
+		Pelikula	peliErrepikatu	 = new Pelikula("Botica de la Abuela");
+		
+		zerreBat.add(peliBat);
+		zerreBat.add(peliBi);
+		zerreBat.add(peliHiru);
+		zerreBat.add(peliErrepikatu);
+		
+		zerreBi.add(peliBat2);
+		zerreBi.add(peliBi2);
+		zerreBi.add(peliHiru2);
+		zerreBi.add(peliErrepikatu);
+		
+			//Biak elkartzen
+		zerreBat.merge(zerreBi);
+			//Luzeraren eta inprimatutakoaren arabera gauzak ondo atera direla frogatuko da
+		assertEquals(8, zerreBat.size());
+		
+		Iterator<Pelikula> it5 = zerreBat.iterator();
+		
+		while (it5.hasNext()) {
+			Pelikula peliHau = it5.next();
+			peliHau.inprimatuIzena();
+		}
+		System.out.println("\n\n\n");
 		
 		
+	
+		// 6. Bi zerrenda izanda, elementu guztiak errepikatuta daudenean
+		zerreBat.zerrendaHustu();
+		zerreBi.zerrendaHustu();
+		
+		zerreBat.add(peliErrepikatu);
+		zerreBat.add(peliErrepikatu);
+		zerreBat.add(peliErrepikatu);
+		zerreBat.add(peliErrepikatu);
+		
+		zerreBi.add(peliErrepikatu);
+		zerreBi.add(peliErrepikatu);
+		zerreBi.add(peliErrepikatu);
+		zerreBi.add(peliErrepikatu);
+		
+		//Biak elkartzen
+		zerreBat.merge(zerreBi);
+			//Luzeraren eta inprimatutakoaren arabera gauzak ondo atera direla frogatuko da
+		assertEquals(8, zerreBat.size());
+		
+		Iterator<Pelikula> it6 = zerreBat.iterator();
+		
+		while (it6.hasNext()) {
+			Pelikula peliHau = it6.next();
+			peliHau.inprimatuIzena();
+		}	
+		System.out.println("\n\n\n");
+		
+		// 7. Lehenengo zerrenda bigarrena baino elementu gehiago dituenean
+		zerreBat.zerrendaHustu();
+		zerreBi.zerrendaHustu();
+		
+		zerreBat.add(peliBat);
+		zerreBat.add(peliBi);
+		zerreBat.add(peliHiru);
+		zerreBat.add(peliErrepikatu);
+		
+		zerreBi.add(peliBat2);
+		zerreBi.add(peliBi2);
+		
+			//Biak elkartzen
+		zerreBat.merge(zerreBi);
+			//Luzeraren eta inprimatutakoaren arabera gauzak ondo atera direla frogatuko da
+		assertEquals(6, zerreBat.size());
+		
+		Iterator<Pelikula> it7 = zerreBat.iterator();
+		
+		while (it7.hasNext()) {
+			Pelikula peliHau = it7.next();
+			peliHau.inprimatuIzena();
+		}
+		System.out.println("\n\n\n");
 		
 		
+		// 8. Bigarren zerrenda lehenengoa baino elementu gehiago dituenean
+		zerreBat.zerrendaHustu();
+		zerreBi.zerrendaHustu();
 		
+		zerreBat.add(peliBat);
+		zerreBat.add(peliHiru);
+	
 		
+		zerreBi.add(peliBat2);
+		zerreBi.add(peliBi2);
+		zerreBi.add(peliHiru2);
+		zerreBi.add(peliErrepikatu);
 		
+		//Biak elkartzen
+		zerreBat.merge(zerreBi);
+			//Luzeraren eta inprimatutakoaren arabera gauzak ondo atera direla frogatuko da
+		assertEquals(6, zerreBat.size());
+		
+		Iterator<Pelikula> it8 = zerreBat.iterator();
+		
+		while (it8.hasNext()) {
+			Pelikula peliHau = it8.next();
+			peliHau.inprimatuIzena();
+		}
+		System.out.println("\n\n\n");
+		
+		//9. Lehenengo zerrendako elementu guztiak bigarren zerrendarenak baino txikiagoak direnean
+		zerreBat.zerrendaHustu();
+		zerreBi.zerrendaHustu();
+		
+		Pelikula	peliA1	 = new Pelikula("Aaron's Destruction");
+		Pelikula	peliA2	 = new Pelikula("Aaaron's Real Destruction");
+		Pelikula	peliA3	 = new Pelikula("Aaaaron's, like, super tough Destruction");
+		
+		zerreBat.add(peliA1);
+		zerreBat.add(peliA2);
+		zerreBat.add(peliA3);
+		
+		zerreBi.add(peliBat2);
+		zerreBi.add(peliBi2);
+		zerreBi.add(peliHiru2);
+		zerreBi.add(peliErrepikatu);
+		
+			//Biak elkartzen
+		zerreBat.merge(zerreBi);
+			//Luzeraren eta inprimatutakoaren arabera gauzak ondo atera direla frogatuko da
+		assertEquals(7, zerreBat.size());
+		
+		Iterator<Pelikula> it9 = zerreBat.iterator();
+		
+		while (it9.hasNext()) {
+			Pelikula peliHau = it9.next();
+			peliHau.inprimatuIzena();
+		}
+		System.out.println("\n\n\n");
+		
+		//10. Bigarren zerrendako elementu guztiak lehenengo zerrendarenak baino txikiagoak direnean
+		zerreBat.zerrendaHustu();
+		zerreBi.zerrendaHustu();
+		
+		zerreBi.add(peliA1);
+		zerreBi.add(peliA2);
+		zerreBi.add(peliA3);
+		
+		zerreBat.add(peliBat2);
+		zerreBat.add(peliBi2);
+		zerreBat.add(peliHiru2);
+		zerreBat.add(peliErrepikatu);
+		
+			//Biak elkartzen
+		zerreBat.merge(zerreBi);
+			//Luzeraren eta inprimatutakoaren arabera gauzak ondo atera direla frogatuko da
+		assertEquals(7, zerreBat.size());
+		
+		Iterator<Pelikula> it10 = zerreBat.iterator();
+		
+		while (it10.hasNext()) {
+			Pelikula peliHau = it10.next();
+			peliHau.inprimatuIzena();
+		}
+		System.out.println("\n\n\n");
+		
+		//11. Bigarren zerrendako elementu guztiak lehenengo zerrendaren lehenengo eta azkenen artean egotea
+		zerreBat.zerrendaHustu();
+		zerreBi.zerrendaHustu();
+		
+		zerreBat.add(peliA1); 		 //Aaron's Destruction
+		zerreBat.add(peli2);		 //Zombie Party 2
+		
+		zerreBi.add(peliBi2);		 //Bisuper
+		zerreBi.add(peliHiru2);		 //Cerbero
+		zerreBi.add(peliErrepikatu); //Botica de la Abuela
+		
+			//Biak elkartzen
+		zerreBat.merge(zerreBi);
+			//Luzeraren eta inprimatutakoaren arabera gauzak ondo atera direla frogatuko da
+		assertEquals(5, zerreBat.size());
+		
+		Iterator<Pelikula> it11 = zerreBat.iterator();
+		
+		while (it11.hasNext()) {
+			Pelikula peliHau = it11.next();
+			peliHau.inprimatuIzena();
+		}
+		System.out.println("\n\n\n");
 		
 	}
 
@@ -363,8 +605,77 @@ public class OrderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testIterator() {
-		fail("Not yet implemented");
+	public void testIterator() { //DONE
+
+		//1. Zerrenda hutsa denean, hasNext() false eman beharko du
+		OrderedDoubleLinkedList<Pelikula> zerreHutsa = new OrderedDoubleLinkedList<Pelikula>();
+		Iterator<Pelikula> itrHutsa = zerreHutsa.iterator();
+		assertFalse(itrHutsa.hasNext());
+		
+		
+		//2. Zerrenda hutsa denean, next() NoSuchElementException botako du
+		try{
+			
+			Pelikula peliEzDaAterako = itrHutsa.next();
+		}
+		
+		catch(NoSuchElementException e){
+			
+			System.out.println("Salbuespena jaurti du.\n\n");
+			assertTrue(true); //fail()-en kontrakoa egiteko;
+		}
+	
+		
+		//3. Zerrenda elementu bakarra daukanean, hasNext() true eman beharko du, BEHIN BAINO GEHIAGOTAN
+		Iterator<Pelikula> itr1	=	zerre1.iterator();
+		assertTrue(itr1.hasNext());
+		assertTrue(itr1.hasNext());
+		assertTrue(itr1.hasNext());
+		
+		
+		/*4. Zerrenda elementu bakarra daukanean: hasNext() true eman beharko du lehenengo saiakeran,
+		 	 next() egiterakoan elementua bueltatuko du, eta hasNext() berriz ere behin baino gehiagotan
+		 	 egiterakoan, false bueltatuko du kasu guztietan. */
+				//itr1 jadanik sortuta dagoela:
+		assertTrue(itr1.hasNext());
+		Pelikula pelikulaBakarra = itr1.next();
+		assertEquals(pelikulaBakarra, peli1);
+		assertFalse(itr1.hasNext());
+		assertFalse(itr1.hasNext());
+		
+		
+		
+		/*5. Zerrenda bi elementu baino gehiago daukanean: hasNext() true eman beharko du lehenengo saiakeran,
+	 	 next() egiterakoan elementuak bueltatuko ditu (zerrendaren aurreko ordena mantenduz), 
+	 	 eta behin zerrenda guztia errekorritua izan dela, hasNext() berriz ere behin baino gehiagotan
+	 	 egiterakoan, false bueltatuko du kasu guztietan. */
+		
+		OrderedDoubleLinkedList<Pelikula> zerreAnitz = new OrderedDoubleLinkedList<Pelikula>();
+		Pelikula peliBat	=	new Pelikula("Zombie Gehiago");
+		Pelikula peliBi		=	new Pelikula("Vuelve a casa, vuelve");
+		Pelikula peliHiru	=	new Pelikula("Mad Max");
+		Pelikula peliLau	=	new Pelikula("Fast and Furious 18");
+		Pelikula peliBost	=	new Pelikula("Avatar 6");
+		
+		zerreAnitz.add(peliBat);
+		zerreAnitz.add(peliBi);
+		zerreAnitz.add(peliHiru);
+		zerreAnitz.add(peliLau);
+		zerreAnitz.add(peliBost);
+		
+		Iterator<Pelikula>	itrAnitz	= zerreAnitz.iterator();
+		Pelikula			peliHau		= null;				
+		
+		while (itrAnitz.hasNext()) {
+			
+			peliHau = itrAnitz.next();
+			peliHau.inprimatuIzena();
+		}
+		
+		assertFalse(itrAnitz.hasNext());
+		assertFalse(itrAnitz.hasNext());
+		
+		
 	}
 
 

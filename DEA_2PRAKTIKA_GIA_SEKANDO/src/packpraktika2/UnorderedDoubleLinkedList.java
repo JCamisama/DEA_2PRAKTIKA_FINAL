@@ -36,7 +36,7 @@ public class UnorderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLi
 		//Kostua: O(1)
 			
 			Node<T> berria = new Node(pElem);
-			Node<T> unekoa = this.first;
+			Node<T> unekoa = super.first;
 			
 			if (this.isEmpty()) {
 				
@@ -48,10 +48,16 @@ public class UnorderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLi
 			
 			else {
 				
-				unekoa = unekoa.prev; //unekoaren aurrekoari apuntatzeko
+				unekoa = unekoa.prev; //unekoaren aurrekoari apuntatzeko, zerrendaren azkenengoari
 				berria.next = this.first;
 				berria.prev = unekoa;
 				unekoa.next = berria;
+				first.prev	=	berria;
+				
+				/*if(this.count == 1) {//Elementu bakarra zegoenean zerrendan
+					
+					first.prev	=	berria;
+				}*/
 				
 			}
 			
@@ -59,29 +65,39 @@ public class UnorderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLi
 
 		}
 	
-	public void addAfter(T elem, T target) {
-		// Aurrebaldintza: zerrendak gutxienez elementu bat dauka.
+	public void addAfter(T pElem, T pHonenAtzetik) {
+		// Aurrebaldintza: zerrendak gutxienez elementu bat dauka. 
+							//Erreferentziazkoa ez badago, ez da sartuko.
 		// Postbaldintza: elem zerrendan gehitu da, target atzean.
-		// KODEA OSATU ETA KOSTUA KALKULATU (AUKERAZKOA)
-				Node<T> sartu = new Node(target);
-				Node<T> lag;
-				lag=first;		
+	
+				Node<T> berria = new Node(pElem);
+				Node<T> unekoa;
+				unekoa= this.first;		
 				boolean topatua = false;	
 				int kont = 0;
 				
-				while(kont != this.count && !topatua) {
+				while(kont < this.count && !topatua) {
 					
-					if (lag.data==elem) {
+					if (unekoa.data == pHonenAtzetik) {
 							
 						topatua=true;
-						sartu.next = lag.next;
-						sartu.prev = lag;
-						lag.next.prev = sartu;
-						lag.next = sartu;			
+							
 					}
-					lag=lag.next;	
-					kont++;
-				}	
+					
+					else{ 
+						unekoa=unekoa.next;	
+						kont++;
+					}
+				}
+				
+				if(topatua){
+					
+					berria.next = unekoa.next;
+					berria.prev = unekoa;
+					unekoa.next.prev = berria;
+					unekoa.next = berria;
+					this.count++;
+				}
 	}
 	
 	public T find(T pElem) {

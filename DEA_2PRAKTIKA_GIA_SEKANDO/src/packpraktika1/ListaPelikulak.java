@@ -32,15 +32,7 @@ public class ListaPelikulak {
 		
 		if( pFilma != null && !this.badago(pFilma) ){
 			
-			if( this.zerrenda instanceof OrderedDoubleLinkedList){
-				
-				((OrderedDoubleLinkedList) this.zerrenda).add(pFilma);	
-			}
-			
-			else{
-				
-				((UnorderedDoubleLinkedList) this.zerrenda).addToRear(pFilma);
-			}
+			((UnorderedDoubleLinkedList) this.zerrenda).addToRear(pFilma);
 		}
 	}
 	
@@ -120,15 +112,7 @@ public class ListaPelikulak {
 		//Post-Baldinta: 	Pelikula ez bada null eta ez badago zerrendan, gehituko da.
 		//Kostua:			O(1);
 		
-		if( this.zerrenda instanceof OrderedDoubleLinkedList){
-			
-			((OrderedDoubleLinkedList) this.zerrenda).add(pPelikula);	
-		}
-		
-		else{
-			
 			((UnorderedDoubleLinkedList) this.zerrenda).addToRear(pPelikula);
-		}
 	}
 	
 	public void ezabatuPelikulaHauetatik(Aktorea pAktoreIzena){//METODO BERRIA, JUNIT BEHAR DU
@@ -162,10 +146,5 @@ public class ListaPelikulak {
 	}
 	
 
-	/**********Metodo arriskutsu bat***********************/
-	
-	public void ordenatuBihurtu(){ //CASTING HAU FROGAK EGITEKO BAKARRIK ERABILIKO DUGU.
-		
-		this.zerrenda = (OrderedDoubleLinkedList) this.zerrenda;
-	}
+
 }

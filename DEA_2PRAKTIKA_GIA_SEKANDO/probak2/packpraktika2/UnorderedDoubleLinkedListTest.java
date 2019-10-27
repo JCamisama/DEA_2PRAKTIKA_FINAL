@@ -3,6 +3,9 @@ import packpraktika1.*;
 
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -162,18 +165,65 @@ public class UnorderedDoubleLinkedListTest {
 				
 		//Elementu bat edo gehiako zerrenda denean
 		UnorderedDoubleLinkedList<Pelikula> zerre2 = new UnorderedDoubleLinkedList<Pelikula>();
-		Pelikula	peli3	= new Pelikula("Zombie Party 2");
+		Pelikula peli3		= new Pelikula("Zombie Party 3");
+		Pelikula peliLau	=	new Pelikula("Fast and Furious 18");
+		Pelikula peliBost	=	new Pelikula("Avatar 6");
 		zerre2.addToRear(peli1);
 		zerre2.addToRear(peli2);
-		zerre2.addToRear(peli3);		
-		assertEquals(zerre2.size(), 3);
+		zerre2.addToRear(peli3);
+		zerre2.addToRear(peliLau);
+		zerre2.addToRear(peliBost);
+		
+		assertEquals(peli1, zerre2.find(peli1));
+		assertEquals(peli2, zerre2.find(peli2));
+		assertEquals(peli3, zerre2.find(peli3));
+		assertEquals(peliLau, zerre2.find(peliLau));
+		assertEquals(peliBost, zerre2.find(peliBost));
+		assertEquals(zerre2.size(), 5);
 		
 		
 	}
 
 	@Test
-	public void testAddAfter() {
-		fail("Not yet implemented");
+	public void testAddAfter() { //DONE
+		
+		
+		//1. Erreferentziazkoa zerrendan ez badago: azkenengo posizioan gehitu
+			//Zerrenda bat
+		UnorderedDoubleLinkedList<Pelikula> zerreBat = new UnorderedDoubleLinkedList<Pelikula>();
+		Pelikula	peliBat	 = new Pelikula("Acha");
+		Pelikula	peliBi	 = new Pelikula("Bazuka");
+		Pelikula	peliHiru = new Pelikula("Casiopea");
+		zerreBat.addToRear(peliBat);
+		zerreBat.addToRear(peliBi);
+		zerreBat.addToRear(peliHiru);
+		
+			//Beste erreferentziazko pelikula eta sartuko den pelikula
+		Pelikula	errefe		= new Pelikula("Cangas");
+		Pelikula	sartu		= new Pelikula("Sancho");
+		
+		zerreBat.addAfter(sartu, errefe);
+		assertNull(zerreBat.find(sartu));
+		
+		//2. Erreferentziazkoa zerrendan dago: azkenengo posizioan gehitu
+			//peliHiru zerreBat-en azkenengo pelikula dela jakinda
+		zerreBat.addAfter(sartu, peliHiru);
+		assertEquals(sartu, zerreBat.last());
+		assertEquals(4, zerreBat.size());
+		
+		
+		//3. Erreferentziazkoa zerrendan dago.
+			//peliBat zerreBat-en azkenengo pelikula dela jakinda
+		Pelikula	sartu2		= new Pelikula("Sancho, El Regreso");
+		zerreBat.addAfter(sartu2, peliBat);
+		assertEquals(sartu2, zerreBat.find(sartu2));
+		assertEquals(5, zerreBat.size());
+		assertEquals(1, zerreBat.posizioaZerrendan(sartu2)); //Non posizioak 0,1,2,3,4 diren, eta luzera = 5
+		
+		//4. Zerrenda elementu bakarrekoa izatea eta elementu hori erreferentziazkoa izatea
+			//peli1 zerre1-en pelikula bakarra dela jakinda
+		zerre1.addAfter(sartu, peli1);
+		assertEquals(2, zerre1.size());	
 	}
 
 	
@@ -300,7 +350,7 @@ public class UnorderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testSize() { //DONE
+	public void testSize(){ //DONE
 		
 		UnorderedDoubleLinkedList<Pelikula>	zerreHutsa	= new UnorderedDoubleLinkedList<Pelikula>();
 		UnorderedDoubleLinkedList<Pelikula>	zerre2		= new UnorderedDoubleLinkedList<Pelikula>();
@@ -319,23 +369,77 @@ public class UnorderedDoubleLinkedListTest {
 	}
 
 	@Test
-	public void testIterator() {
-		/*
-		 * test hasNext on an empty collection (returns false)
-test next() on an empty collection (throws exception)
-test hasNext on a collection with one item (returns true, several times)
-test hasNext/next on a collection with one item: hasNext returns true, next returns the item, hasNext returns false, twice
-test remove on that collection: check size is 0 after
-test remove again: exception
-final test with a collection with several items, make sure the iterator goes through each item, in the correct order (if there is one)
-remove all elements from the collection: collection is now empty
-		 * 
-		 * 
-		 */
-		//1. Zerrenda hutsa denean
+	public void testIterator() { //DONE
+
+		//1. Zerrenda hutsa denean, hasNext() false eman beharko du
 		UnorderedDoubleLinkedList<Pelikula> zerreHutsa = new UnorderedDoubleLinkedList<Pelikula>();
-		//Iterator<Pelikula> itrHutsa = zerreHutsa.iterator();
-		//assertFalse()
+		Iterator<Pelikula> itrHutsa = zerreHutsa.iterator();
+		assertFalse(itrHutsa.hasNext());
+		
+		
+		//2. Zerrenda hutsa denean, next() NoSuchElementException botako du
+		try{
+			
+			Pelikula peliEzDaAterako = itrHutsa.next();
+		}
+		
+		catch(NoSuchElementException e){
+			
+			System.out.println("Salbuespena jaurti du.\n\n");
+			assertTrue(true); //fail()-en kontrakoa egiteko;
+		}
+	
+		
+		//3. Zerrenda elementu bakarra daukanean, hasNext() true eman beharko du, BEHIN BAINO GEHIAGOTAN
+		Iterator<Pelikula> itr1	=	zerre1.iterator();
+		assertTrue(itr1.hasNext());
+		assertTrue(itr1.hasNext());
+		assertTrue(itr1.hasNext());
+		
+		
+		/*4. Zerrenda elementu bakarra daukanean: hasNext() true eman beharko du lehenengo saiakeran,
+		 	 next() egiterakoan elementua bueltatuko du, eta hasNext() berriz ere behin baino gehiagotan
+		 	 egiterakoan, false bueltatuko du kasu guztietan. */
+				//itr1 jadanik sortuta dagoela:
+		assertTrue(itr1.hasNext());
+		Pelikula pelikulaBakarra = itr1.next();
+		assertEquals(pelikulaBakarra, peli1);
+		assertFalse(itr1.hasNext());
+		assertFalse(itr1.hasNext());
+		
+		
+		
+		/*5. Zerrenda bi elementu baino gehiago daukanean: hasNext() true eman beharko du lehenengo saiakeran,
+	 	 next() egiterakoan elementuak bueltatuko ditu (zerrendaren aurreko ordena mantenduz), 
+	 	 eta behin zerrenda guztia errekorritua izan dela, hasNext() berriz ere behin baino gehiagotan
+	 	 egiterakoan, false bueltatuko du kasu guztietan. */
+		
+		UnorderedDoubleLinkedList<Pelikula> zerreAnitz = new UnorderedDoubleLinkedList<Pelikula>();
+		Pelikula peliBat	=	new Pelikula("Zombie Gehiago");
+		Pelikula peliBi		=	new Pelikula("Vuelve a casa, vuelve");
+		Pelikula peliHiru	=	new Pelikula("Mad Max");
+		Pelikula peliLau	=	new Pelikula("Fast and Furious 18");
+		Pelikula peliBost	=	new Pelikula("Avatar 6");
+		
+		zerreAnitz.addToRear(peliBat);
+		zerreAnitz.addToRear(peliBi);
+		zerreAnitz.addToRear(peliHiru);
+		zerreAnitz.addToRear(peliLau);
+		zerreAnitz.addToRear(peliBost);
+		
+		Iterator<Pelikula>	itrAnitz	= zerreAnitz.iterator();
+		Pelikula			peliHau		= null;				
+		
+		while (itrAnitz.hasNext()) {
+			
+			peliHau = itrAnitz.next();
+			peliHau.inprimatuIzena();
+		}
+		
+		assertFalse(itrAnitz.hasNext());
+		assertFalse(itrAnitz.hasNext());
+		
+		
 	}
 
 	

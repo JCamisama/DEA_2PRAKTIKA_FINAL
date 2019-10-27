@@ -8,7 +8,7 @@ public abstract class DoubleLinkedList<T extends Comparable<T>> implements ListA
 	// Atributuak
 	protected Node<T> first; // lehenengoaren erreferentzia
 	protected String deskr;  // deskribapena
-	protected int count;     // Susmoa: zerrendan dagoen elementu kopurua (Galdetu Koldori)
+	protected int count;     // Zerrendan dagoen elementu kopurua.
 
 	public DoubleLinkedList() { //Super deiaren bidez inplementatuko da, baina ez dira mota honetako klaseak inplementatuko
 		
@@ -191,16 +191,14 @@ public abstract class DoubleLinkedList<T extends Comparable<T>> implements ListA
 		//Aurre baldintza: -------
 		//Post baldintza: Iteradore baten funtzio erabilgarrienak inplementatuta eukitea (hasNext, add...)
 			   
-		private int indizea = 0 ;
-		private Node<T> unekoa ;
-		private Node<T> aurrekoa ;
+		private int indizea = 0;
+		private Node<T> unekoa;
 
-		ListIterator ( ) {
+		ListIterator(){
 
-			unekoa = first;
-			//aurrekoa = unekoa.prev;
-			aurrekoa = null;
-			indizea = 0 ;
+			unekoa = DoubleLinkedList.this.first;
+			
+			indizea = 0;
 		}
 
 		@Override
@@ -220,55 +218,19 @@ public abstract class DoubleLinkedList<T extends Comparable<T>> implements ListA
 			//Post baldintza: Iteradorearen bidez hurrengo elementua bueltatzen du
 			//Kostua: O(1)	
 				   
-			if( ! hasNext ( ) ) {  
+			if(!hasNext ( )) {  
 					   
 				throw new NoSuchElementException ( ) ;
 					   
 			}
 			   
-			aurrekoa = unekoa ;
+			
 			T objektua = unekoa.data ;
 			unekoa = unekoa.next ;
 			indizea++;
-			return objektua ;
+			return objektua;
 				   
-		}
-
-
-	
-			    
-		public boolean hasPrev ( ) {
-
-			//Aurre baldintza: -------
-			//Post baldintza: Iteradorearen bidez aurreko elementua dagoen ala ez bueltatzen du boolean bidez
-			//Kostua: O(1)
-			    	
-			return indizea > 0 ;
-			    
-		}
-
-		
-		
-		public T prev ( ) {
-
-			//Aurre baldintza: -------
-			//Post baldintza: Iteradorearen bidez aurreko elementua bueltatzen du
-			//Kostua: O(1)
-			    	
-			if ( ! hasPrev ( ) ) {
-			    		
-			    	throw new NoSuchElementException ( ) ;
-			    			
-			}
-			    	
-			unekoa = unekoa.prev ;
-			aurrekoa = unekoa ;
-			indizea--;
-			return unekoa.data ;
-			    	
-		}
-	   
-	   
+		} 
    }
 
 
@@ -292,6 +254,7 @@ public abstract class DoubleLinkedList<T extends Comparable<T>> implements ListA
 	public void zerrendaHustu(){ //FROGAK EGITEKO ERABILIKO DA BAKARRIK
 		
 		this.first = null;
+		this.count = 0;
 	}
 
 	public int posizioaZerrendan(T pElem){ //FROGAK EGITEKO ERABILIKO DA BAKARRIK
