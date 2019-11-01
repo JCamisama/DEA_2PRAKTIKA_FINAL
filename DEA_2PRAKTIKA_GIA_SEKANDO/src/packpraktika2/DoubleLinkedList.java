@@ -235,21 +235,8 @@ public abstract class DoubleLinkedList<T extends Comparable<T>> implements ListA
 
 
 	
-	public void adabegiakInprimatu() {
-		System.out.println(this.count);
-	}
 
 	
-	@Override
-	public String toString() {
-		String result = new String();
-		Iterator<T> it = iterator();
-		while (it.hasNext()) {
-			T elem = it.next();
-			result = result + "[" + elem.toString() + "] \n";
-		}	
-		return "SimpleLinkedList " + result + "]";
-	}
 
 	public void zerrendaHustu(){ //FROGAK EGITEKO ERABILIKO DA BAKARRIK
 		

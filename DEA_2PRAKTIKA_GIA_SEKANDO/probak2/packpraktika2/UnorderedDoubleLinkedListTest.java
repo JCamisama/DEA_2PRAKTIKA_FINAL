@@ -139,7 +139,7 @@ public class UnorderedDoubleLinkedListTest {
 		zerre1.addToFront(peli2);
 		assertEquals(zerre1.size(), 2);		
 				
-		//Elementu bat edo gehiako zerrenda denean
+		//Elementu bat edo gehiagoko zerrenda denean
 		UnorderedDoubleLinkedList<Pelikula> zerre2 = new UnorderedDoubleLinkedList<Pelikula>();
 		Pelikula	peli3	= new Pelikula("Zombie Party 2");
 		zerre2.addToFront(peli1);

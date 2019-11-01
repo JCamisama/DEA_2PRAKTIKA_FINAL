@@ -5,8 +5,8 @@ public class UnorderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLi
 	public void addToFront(T pElem) {
 		
 		// Aurrebaldintza: ----
-		// Postbaldintza: elem zerrendaren hasieran gehitu da.
-		// hasieran gehitu
+		// Postbaldintza: pElem zerrendaren hasieran gehitu da.
+		// Kostua:		   O(1);
 		
 		Node<T> datua = new Node(pElem);
 		Node<T> unekoa = this.first;
@@ -66,9 +66,9 @@ public class UnorderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLi
 		}
 	
 	public void addAfter(T pElem, T pHonenAtzetik) {
-		// Aurrebaldintza: zerrendak gutxienez elementu bat dauka. 
-							//Erreferentziazkoa ez badago, ez da sartuko.
-		// Postbaldintza: elem zerrendan gehitu da, target atzean.
+		// Aurrebaldintza: Zerrendak gutxienez elementu bat dauka. 
+		// Postbaldintza: pElem zerrendan gehitu da, target atzean. Erreferentziazko zerrendan ez bazegoen,
+						  //azkenengo posizioan gehituko da.
 	
 				Node<T> berria = new Node(pElem);
 				Node<T> unekoa;
